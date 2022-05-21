@@ -5,9 +5,9 @@ module aiso_reset_tb;
 //////////////////////////////////////////
 //         Signal Declarations
 //////////////////////////////////////////
-    input logic         clk, reset;
-    input logic         aiso_reset;
-    int                 errorCount;
+    logic        clk, reset;
+    logic        aiso_reset;
+    int          errorCount;
     
 //////////////////////////////////////////
 //         Device Under Test
@@ -35,13 +35,15 @@ module aiso_reset_tb;
     
     //Counts a lot of times
     task check_reset; begin
-        //Check after not allowing enough time for the aiso_reset to go high
-        if( aiso_reset == 1 ) begin
+        //Check after not allowing enough time for the aiso_reset to go low
+        if( aiso_reset == 0 ) begin
             $display("ERROR: AISO RESET WENT HIGH TOO EARLY AT TIME %d ns", $time);
                 errorCount = errorCount + 1;
         end
-        #10; //Wait a clock cycle before checking again, aiso_reset should be high now
-        if( aiso_reset != 1 ) begin
+        //Wait for two pos edges on clk before checking again, aiso_reset should be low now
+        @(posedge clk);
+        @(posedge clk);
+        if( aiso_reset != 0 ) begin
             $display("ERROR: AISO RESET NOT WORKING CORRECTLY AT TIME %d ns", $time);
             errorCount = errorCount + 1;
         end  
