@@ -31,7 +31,7 @@ begin
 ----------------------------------------------------------------------------------
     -- active low reset
     process(clk, reset) begin
-        if(rising_edge(clk) or falling_edge(reset)) then
+        if(clk'event and clk = '1') then
             if(reset = '0') then
                 Q1 <= '0';
             else
@@ -40,15 +40,19 @@ begin
         end if;
     end process;
     
-    process(clk) begin
-        if(rising_edge(clk)) then
-            Q2 <= Q1;
+    process(clk, reset) begin
+        if(clk'event and clk = '1') then
+            if(reset = '0') then
+                Q2 <= '0';
+            else
+                Q2 <= Q1;
+            end if;
         end if;
     end process;
 
 ----------------------------------------------------------------------------------
 -- COMBINATIONAL LOGIC
 ----------------------------------------------------------------------------------
-    aiso_reset <= not(Q2);
+    aiso_reset <= Q2;
 
 end rtl;

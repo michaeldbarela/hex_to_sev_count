@@ -36,7 +36,7 @@ module aiso_reset_tb;
     //Counts a lot of times
     task check_reset; begin
         //Check after not allowing enough time for the aiso_reset to go low
-        if( aiso_reset == 0 ) begin
+        if( aiso_reset != 0 ) begin
             $display("ERROR: AISO RESET WENT HIGH TOO EARLY AT TIME %d ns", $time);
                 errorCount = errorCount + 1;
         end
