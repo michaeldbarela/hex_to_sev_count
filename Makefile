@@ -70,11 +70,11 @@ sv_rtl:
     fi
 
 sv_tb:
-	$(eval SRC_FILES :=$(wildcard $(VLOG_TB_DIR)/*.sv))
+	$(eval SRC_FILES :=$(wildcard $(SV_TB_DIR)/*.sv))
 	$(eval NO_OF_FILES := $(words $(SRC_FILES)))
 	@if [ ${NO_OF_FILES} -gt 0 ] ; then \
         for file in $(SRC_FILES); do \
-			vcom -work $(WORK_LIB) $${file}; \
+			vlog -work $(WORK_LIB) $${file}; \
 		done \
     fi
 
@@ -92,11 +92,3 @@ clean:
 	@rm -f modelsim.ini
 	@echo Deleting any waveform files or transcripts
 	@rm -f *.wlf *.log transcript
-
-# 	$(eval LIBS :=$(wildcard *.libs/))
-# 	$(eval NO_OF_LIBS := $(words $(LIBS)))
-# 	@if [ ${NO_OF_LIBS} -gt 0 ] ; then \
-#         echo Deleting libraries ; \
-#         vdel -all ; \
-#     fi
-#     fi
