@@ -25,10 +25,10 @@ architecture rtl of top is
 ----------------------------------------------------------------------------------
 -- SIGNAL DECLARATIONS
 ----------------------------------------------------------------------------------
-    signal aiso_reset   : std_logic;
-    signal clean        : std_logic;
-    signal ped          : std_logic;
-    signal count        : std_logic_vector(15 DOWNTO 0);
+    signal aiso_rst   : std_logic;
+    signal clean      : std_logic;
+    signal ped        : std_logic;
+    signal count      : std_logic_vector(15 DOWNTO 0);
 
 ----------------------------------------------------------------------------------
 -- COMPONENT DECLARATIONS
@@ -52,7 +52,10 @@ architecture rtl of top is
 
     component pos_edge_det
         port(
-            
+            reset       : in std_logic;
+            clk         : in std_logic;
+            level       : in std_logic;
+            ped         : out std_logic
         );
     end component;
 
@@ -88,6 +91,45 @@ begin
 ----------------------------------------------------------------------------------
 -- COMPONENT INSTANTIATIONS
 ----------------------------------------------------------------------------------
+    u_aiso_reset: aiso_reset
+        port map(
+            reset       => reset,
+            clk         => clk,
+            aiso_reset  => aiso_rst
+        );
 
+    u_debounce_top: debounce_top
+        port map(
+            reset       => aiso_rst,
+            clk         => clk,
+            noisy       => inc,
+            clean       => clean
+        );
+
+    u_pos_edge_det: pos_edge_det
+        port map(
+            reset       => aiso_rst,
+            clk         => clk,
+            level       => clean,
+            ped         => ped
+        );
+
+    u_counter: counter
+        port map(
+            reset       => aiso_rst,
+            clk         => clk,
+            ped         => ped,
+            uph_dnl     => uph_dnl,
+            count       => count
+        );
+
+    u_sev_seg_ctrl: sev_seg_ctrl
+        port map(
+            reset       => aiso_rst,
+            clk         => clk,
+            count       => count,
+            cathode     => cathode,
+            anode       => anode
+        );
 
 end rtl;
