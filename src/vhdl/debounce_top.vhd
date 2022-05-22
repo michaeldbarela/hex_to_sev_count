@@ -31,7 +31,7 @@ architecture rtl of debounce_top is
     component pulse_gen
         generic(
             -- Default values correspond to 10ms pulse
-            BIT_WIDTH   : integer := 19;
+            BIT_WIDTH   : integer := 20;
             COUNT       : integer := 999999
         );
         port(
