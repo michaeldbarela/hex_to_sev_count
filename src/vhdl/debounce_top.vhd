@@ -65,7 +65,7 @@ begin
 ----------------------------------------------------------------------------------
     u_pulse_gen_10ms: pulse_gen
         generic map(
-            BIT_WIDTH => 19,
+            BIT_WIDTH => 20,
             COUNT     => 999999
         )
         port map(
