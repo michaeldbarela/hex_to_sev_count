@@ -105,7 +105,7 @@ begin
                 deb_in <= '1';
             when "101-1" =>
                 state_d <= one;
-                deb_in <= 1;
+                deb_in <= '1';
             -- wait0_2
             when "11000" =>
                 state_d <= wait0_2;
@@ -115,7 +115,7 @@ begin
                 deb_in <= '1';
             when "110-1" =>
                 state_d <= one;
-                deb_in <= 1;
+                deb_in <= '1';
             -- wait0_3
             when "11100" =>
                 state_d <= wait0_3;
@@ -125,12 +125,12 @@ begin
                 deb_in <= '0';
             when "111-1" =>
                 state_d <= one;
-                deb_in <= 1;
+                deb_in <= '1';
             -- default
             when others =>
                 state_d <= zero;
                 deb_in  <= '0';
-        end case;
+        end case?;
     end process;
 
     -- output debounced signal
