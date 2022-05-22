@@ -15,7 +15,6 @@ entity debounce_top is
         reset       : in std_logic;
         clk         : in std_logic;
         noisy       : in std_logic;
-        m_tick      : in std_logic;
         clean       : out std_logic
     );
 end debounce_top;
@@ -65,7 +64,7 @@ begin
 -- COMPONENT INSTANTIATIONS
 ----------------------------------------------------------------------------------
     u_pulse_gen_10ms: pulse_gen
-        generic_map(
+        generic map(
             BIT_WIDTH => 19,
             COUNT     => 999999
         )
