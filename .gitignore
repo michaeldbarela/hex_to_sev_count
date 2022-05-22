@@ -13,6 +13,7 @@
 *.xpr
 *.jou
 *.log
+xilinx/
 
 # Unecessary directories and files created by Vitis
 
