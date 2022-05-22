@@ -49,88 +49,136 @@ begin
 ----------------------------------------------------------------------------------
     -- next state logic
     process(state_q, m_tick, noisy)
-        variable cat : std_logic_vector(4 DOWNTO 0);
+        variable cat : std_logic_vector(1 DOWNTO 0) := m_tick & noisy;
     begin
-        case?(cat) is
+        case(state_q) is
             -- zero
-            when "000-0" =>
-                state_d <= zero;
-                deb_in <= '0';
-            when "000-1" =>
-                state_d <= wait1_1;
-                deb_in <= '0';
+            when zero =>
+                case?(cat) is
+                    when "-0" =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                    when "-1" =>
+                        state_d <= wait1_1;
+                        deb_in <= '0';
+                    when others =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                end case?;
             -- wait1_1
-            when "001-0" =>
-                state_d <= zero;
-                deb_in <= '0';
-            when "00101" =>
-                state_d <= wait1_1;
-                deb_in <= '0';
-            when "00111" =>
-                state_d <= wait1_2;
-                deb_in <= '0';
+            when wait1_1 =>
+                case?(cat) is
+                    when "-0" =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                    when "01" =>
+                        state_d <= wait1_1;
+                        deb_in <= '0';
+                    when "11" =>
+                        state_d <= wait1_2;
+                        deb_in <= '0';
+                    when others =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                end case?;
             -- wait1_2
-            when "010-0" =>
-                state_d <= zero;
-                deb_in <= '0';
-            when "01001" =>
-                state_d <= wait1_2;
-                deb_in <= '0';
-            when "01011" =>
-                state_d <= wait1_3;
-                deb_in <= '0';
+            when wait1_2 =>
+                case?(cat) is
+                    when "-0" =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                    when "01" =>
+                        state_d <= wait1_2;
+                        deb_in <= '0';
+                    when "11" =>
+                        state_d <= wait1_3;
+                        deb_in <= '0';
+                    when others =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                end case?;
             -- wait1_3
-            when "011-0" =>
-                state_d <= zero;
-                deb_in <= '0';
-            when "01101" =>
-                state_d <= wait1_3;
-                deb_in <= '0';
-            when "01111" =>
-                state_d <= one;
-                deb_in <= '1';
+            when wait1_3 =>
+                case?(cat) is
+                    when "-0" =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                    when "01" =>
+                        state_d <= wait1_3;
+                        deb_in <= '0';
+                    when "11" =>
+                        state_d <= one;
+                        deb_in <= '1';
+                    when others =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                end case?;
             -- one
-            when "100-0" =>
-                state_d <= wait0_1;
-                deb_in <= '1';
-            when "100-1" =>
-                state_d <= one;
-                deb_in <= '1';
+            when one =>
+                case?(cat) is
+                    when "-0" =>
+                        state_d <= wait0_1;
+                        deb_in <= '1';
+                    when "-1" =>
+                        state_d <= one;
+                        deb_in <= '1';
+                    when others =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                end case?;
             -- wait0_1
-            when "10100" =>
-                state_d <= wait0_1;
-                deb_in <= '1';
-            when "10110" =>
-                state_d <= wait0_2;
-                deb_in <= '1';
-            when "101-1" =>
-                state_d <= one;
-                deb_in <= '1';
+            when wait0_1 =>
+                case?(cat) is
+                    when "00" =>
+                        state_d <= wait0_1;
+                        deb_in <= '1';
+                    when "10" =>
+                        state_d <= wait0_2;
+                        deb_in <= '1';
+                    when "-1" =>
+                        state_d <= one;
+                        deb_in <= '1';
+                    when others =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                end case?;
             -- wait0_2
-            when "11000" =>
-                state_d <= wait0_2;
-                deb_in <= '1';
-            when "11010" =>
-                state_d <= wait0_3;
-                deb_in <= '1';
-            when "110-1" =>
-                state_d <= one;
-                deb_in <= '1';
+            when wait0_2 =>
+                case?(cat) is
+                    when "00" =>
+                        state_d <= wait0_2;
+                        deb_in <= '1';
+                    when "10" =>
+                        state_d <= wait0_3;
+                        deb_in <= '1';
+                    when "-1" =>
+                        state_d <= one;
+                        deb_in <= '1';
+                    when others =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                end case?;
             -- wait0_3
-            when "11100" =>
-                state_d <= wait0_3;
-                deb_in <= '1';
-            when "11110" =>
-                state_d <= zero;
-                deb_in <= '0';
-            when "111-1" =>
-                state_d <= one;
-                deb_in <= '1';
+            when wait0_3 =>
+                case?(cat) is
+                    when "00" =>
+                        state_d <= wait0_3;
+                        deb_in <= '1';
+                    when "10" =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                    when "-1" =>
+                        state_d <= one;
+                        deb_in <= '1';
+                    when others =>
+                        state_d <= zero;
+                        deb_in <= '0';
+                end case?;
             -- default
             when others =>
                 state_d <= zero;
                 deb_in  <= '0';
-        end case?;
+        end case;
     end process;
 
     -- output debounced signal
