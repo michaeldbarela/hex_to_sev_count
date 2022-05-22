@@ -10,14 +10,14 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity dec_2to4 is
+entity decoder_2to4 is
     port( 
         counter     : in std_logic_vector(1 DOWNTO 0);
         anode       : out std_logic_vector(7 DOWNTO 0)
     );
-end dec_2to4;
+end decoder_2to4;
 
-architecture rtl of dec_2to4 is
+architecture rtl of decoder_2to4 is
 ----------------------------------------------------------------------------------
 -- SIGNAL DECLARATIONS
 ----------------------------------------------------------------------------------
