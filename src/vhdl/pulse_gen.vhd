@@ -10,8 +10,9 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity pulse_gen_10ms is
+entity pulse_gen is
     generic(
+        -- default values corresepond to 10ms pulse
         BIT_WIDTH   : integer := 19;
         COUNT       : integer := 999999
     );
@@ -20,7 +21,7 @@ entity pulse_gen_10ms is
         clk         : in std_logic;
         m_tick      : out std_logic
     );
-end pulse_gen_10ms;
+end pulse_gen;
 
 architecture rtl of debounce_top is
 ----------------------------------------------------------------------------------
