@@ -23,7 +23,7 @@ entity pulse_gen is
     );
 end pulse_gen;
 
-architecture rtl of debounce_top is
+architecture rtl of pulse_gen is
 ----------------------------------------------------------------------------------
 -- SIGNAL DECLARATIONS
 ----------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ begin
 ----------------------------------------------------------------------------------
     -- next-state logic
     count_d <= (others=>'0') when to_integer(unsigned(count_q)) = COUNT
-                else std_logic_vector(to_unsigned(to_integer(unsigned(count_q)) + 1), count_d'length);
+                else std_logic_vector(to_unsigned(to_integer(unsigned(count_q)) + 1, count_d'length));
 
     -- output tick
     m_tick <= '1' when to_integer(unsigned(count_q)) = COUNT
