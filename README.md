@@ -1,8 +1,8 @@
-Local tree structure:
-├── Makefile
-├── README.md
-├── bd
-├── build
+Local tree structure:  
+├── Makefile  
+├── README.md  
+├── bd  
+├── build  
 │   └── work.lib
 │       ├── _info
 │       ├── _lib.qdb
